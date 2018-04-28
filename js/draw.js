@@ -1,14 +1,14 @@
 //var container = document.getElementById('container')
 var	canvas, context;
 var	maxWidth, maxHeight;
-var time = new Date().getTime();
+//var time = new Date().getTime();
 
 function init(){
 	canvas = document.createElement ("canvas")
 	context = canvas.getContext("2d")
 	//container.appendChild(canvas);
 	document.body.appendChild(canvas);
-
+	SetSize();
 	window.addEventListener("resize", SetSize);
 }
 
@@ -26,9 +26,24 @@ function animate(){
 }
 
 function render(){
+	context.clearRect(0, 0, maxWidth, maxHeight);
 	context.fillStyle = "red";
 	context.fillRect(0, 0, 100, 100);
-
+//Triangulo
+	context.beginPath();
+	context.moveTo(maxWidth/2, maxHeight/2);
+	context.lineTo(400, 500);
+	context.lineTo(300, 550);
+	context.lineTo(200, 100);
+	context.lineTo(maxWidth/2, maxHeight/2);
+	context.strokeStyle = "blue";
+	context.stroke();
+	context.closePath();
+//Circulo
+	context.beginPath();
+	context.arc(300,300, 10, Math.PI*2, false);
+	context.strokeStyle ="green";
+	context.stroke();
 }
 
 init();
