@@ -1,21 +1,23 @@
 //var container = document.getElementById('container')
 Math.distance = function(a, b){
 	return Math.sqrt (Math.pow((a.x-b.x), 2) + Math.pow((a.y-b.y), 2) );
+	//Teorema de pitagoras para sacara el resultado de la distancia entre 2 puntos.
 }
 var canvas, context;
 var maxWidth, maxHeight;
-var time = new Date().getTime();
+//var time = new Date().getTime();
 //var	  particle = {
 //	x: Math.random() * window.innerWidth,
 //	y: Math.random() * window.innerHeight,
 //	radius: (Math.random() *10) + 3
-//} PREGUNTAR
+//} PREGUNTAR De
 
 var particles = [];
-var particleCounter = 200;
+var particleCounter = 100;
 var PI2 = Math.PI * 2;
 var minDistance = 60;
 
+//Canvas es un tag para dibujar
 function init() {
     canvas = document.createElement("canvas")
     context = canvas.getContext("2d")
@@ -44,7 +46,7 @@ function SetSize() {
 
 function animate() {
     requestAnimationFrame(animate);
-    time = new Date().getTime();
+    //time = new Date().getTime();
     render();
 }
 
@@ -57,8 +59,8 @@ var Particle = function(args) {
     this.alpha = Math.random ()
     this.rgba = "rgba(255, 255, 255," +this.alpha+")";
     this.velocity = { 
-    	x: Math.random() -0.5,
-    	y: Math.random() -0.5
+    	x: (Math.random()*10) -5,
+    	y: (Math.random()*10) -5
     };
     this.radius = args.radius || this.alpha * 4;
     this.draw = function(ctx) {
@@ -93,10 +95,11 @@ var Particle = function(args) {
 
 function render() {
     context.clearRect(0, 0, maxWidth, maxHeight);
+	context.strokeStyle = "white";
     for (var i = 0; i < particles.length; i++) {
         var a = particles[i];
         a.draw(context);
-        for (var j = 1 + 1; j < particles.length; j++) {
+        for (var j = i + 1; j < particles.length; j++) {
         	var b =particles [j];
         	var distance = Math.distance(a.position, b.position);
         	if (distance < minDistance){
@@ -105,7 +108,6 @@ function render() {
         		context.lineTo(b.position.x, b.position.y);
         		context.lineWidth = (1-(distance / minDistance)) * 2;
         		context.stroke();
-        		context.strokeStyle = "white";
         		context.closePath();
         	}
         }
